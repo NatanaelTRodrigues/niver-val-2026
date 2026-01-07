@@ -422,3 +422,28 @@ select:focus {
     flex-direction: column;
   }
 }
+
+/* Card de Observação (Dica do Parque) */
+.park-note {
+  background-color: #f0fdfc; /* Fundo bem clarinho */
+  border: 2px dashed var(--primary); /* Borda tracejada charmosa */
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+}
+
+.park-note i {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.park-note p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
