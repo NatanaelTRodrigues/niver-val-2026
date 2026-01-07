@@ -348,3 +348,77 @@ select:focus {
     opacity: 1;
   }
 }
+
+/* Estilos do Mapa e Botões GPS */
+.map-box {
+  background: var(--white);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.section-title-sm {
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin: 0 0 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.map-frame {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 2px solid var(--primary-light);
+  margin-bottom: 15px;
+}
+
+.gps-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-gps {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: white;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-gps:hover {
+  transform: translateY(-3px);
+}
+
+/* Cores Oficiais */
+.btn-gps.google {
+  background: #4285f4;
+}
+.btn-gps.waze {
+  background: #33ccff;
+  color: #000;
+} /* Waze é azul claro com texto preto */
+.btn-gps.uber {
+  background: #000000;
+}
+
+/* Responsivo para telas muito pequenas */
+@media (max-width: 350px) {
+  .gps-buttons {
+    flex-direction: column;
+  }
+}
