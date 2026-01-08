@@ -156,3 +156,29 @@ function toggleMagicEye() {
     icon.classList.add("fa-eye");
   }
 }
+
+function tocarNoSite() {
+  const container = document.getElementById("spotify-player-container");
+  const actions = document.getElementById("playlist-actions");
+
+  // ⚠️ SUBSTITUA PELO ID DA SUA PLAYLIST REAL AQUI ⚠️
+  // Se o link for .../playlist/12345ABCDE, o ID é "12345ABCDE"
+  const PLAYLIST_ID = "37i9dQZF1DX0h0QnLkMBl4";
+
+  // Monta o player do Spotify
+  container.innerHTML = `
+        <iframe style="border-radius:12px" 
+            src="https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator&theme=0" 
+            width="100%" 
+            height="152" 
+            frameBorder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+        </iframe>
+    `;
+
+  // Mostra o player e esconde os botões (para não ficar poluído)
+  container.classList.remove("hidden");
+  actions.style.display = "none"; // Opcional: esconde os botões após clicar
+}
