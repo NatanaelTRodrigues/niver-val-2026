@@ -532,3 +532,68 @@ select:focus {
 .main-container {
   transition: all 0.6s ease-in-out;
 }
+/* Ajustes do Card da Playlist */
+.playlist-card {
+  flex-direction: column; /* Muda para coluna para caber o player embaixo */
+  align-items: stretch;
+  gap: 15px;
+}
+
+.playlist-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.playlist-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end; /* Botões alinhados à direita */
+}
+
+/* Estilo dos Botões Spotify */
+.btn-spotify {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+  border: none;
+}
+
+.btn-spotify:hover {
+  transform: scale(1.05);
+}
+
+/* Botão Preenchido (Verde) */
+.btn-spotify.filled {
+  background: #1db954;
+  color: white;
+}
+
+/* Botão Contorno (Transparente) */
+.btn-spotify.outline {
+  background: transparent;
+  border: 1px solid #1db954;
+  color: #1db954;
+}
+
+/* Container do Iframe */
+.player-frame {
+  margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+  animation: fadeIn 0.5s;
+}
+
+.player-frame iframe {
+  width: 100%;
+  border: none;
+  /* Altura padrão do player mini do Spotify */
+  height: 152px;
+}
