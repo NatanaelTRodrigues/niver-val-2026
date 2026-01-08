@@ -137,3 +137,22 @@ document.getElementById("rsvp-form").addEventListener("submit", function (e) {
       btn.disabled = false;
     });
 });
+
+function toggleMagicEye() {
+  const container = document.querySelector(".main-container");
+  const icon = document.querySelector("#magic-btn i");
+
+  // Alterna a classe que esconde
+  container.classList.toggle("invisible");
+
+  // Troca o ícone para dar feedback visual
+  if (container.classList.contains("invisible")) {
+    // Se escondeu, mostra ícone de "olho cortado" (para voltar)
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    // Se mostrou, volta o ícone normal
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
+}

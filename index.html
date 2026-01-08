@@ -15,12 +15,20 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div
+      id="magic-btn"
+      class="magic-eye"
+      onclick="toggleMagicEye()"
+      title="Ver apenas o fundo"
+    >
+      <i class="fa-solid fa-eye"></i>
+    </div>
     <div class="main-container">
       <header class="header-box animate-up">
-        <img alt="" class="header-bg-img" />
+        <img src="perfil.png" alt="" class="header-bg-img" />
 
         <p class="super-title">SAVE THE DATE</p>
-        <h1>Aniversário da Val</h1>
+        <h1>Aniversário da Val 🎈</h1>
 
         <div class="event-details">
           <div class="detail-item">
@@ -37,6 +45,37 @@
           </div>
         </div>
       </header>
+
+      <section class="message-box animate-up delay-1">
+        <div class="profile-img">
+          <img src="perfil.png" alt="Foto da Val" />
+        </div>
+
+        <div class="val-text">
+          <p>
+            "Sempre fui movida a esporte, mas há cerca de três anos a corrida
+            ganhou um espaço especial no meu coração. O que começou pela saúde
+            virou paixão, principalmente por tudo que o esporte traz além do
+            treino: a convivência, a troca e os momentos juntos."
+          </p>
+          <p>
+            Por isso, resolvi unir duas coisas que amo: correr e estar com meus
+            amigos e família. No fim, é sobre isso: corrida, gente querida por
+            perto e celebrar mais um ano do meu jeito!
+          </p>
+
+          <div class="dress-code-alert">
+            <i class="fa-solid fa-vest"></i>
+            <div>
+              <strong>Dress Code:</strong> Tons de Verde! 💚<br />
+              <span
+                >(Preferência por <b>Verde-Água</b>, mas qualquer verde
+                vale!)</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
 
       <h3 class="section-title animate-up delay-2">
         Como você vai participar?
@@ -62,17 +101,29 @@
 
       <section id="hidden-area" class="hidden">
         <div id="playlist-box" class="playlist-card hidden">
-          <div class="spotify-logo"><i class="fa-brands fa-spotify"></i></div>
-          <div class="text">
-            <strong>Playlist da Corrida</strong>
-            <p>Já vai entrando no clima!</p>
+          <div id="playlist-content" class="playlist-row">
+            <div class="spotify-logo"><i class="fa-brands fa-spotify"></i></div>
+            <div class="text">
+              <strong>Playlist da Corrida</strong>
+              <p>Já vai entrando no clima!</p>
+            </div>
           </div>
-          <a
-            href="https://open.spotify.com/playlist/6iHvN43pGY2sWin3lxi3FZ?si=xvyuLZQhTkWsXmjYEXNmRQ&pi=BK-0OOvASciYG"
-            target="_blank"
-            class="btn-spotify"
-            >Ouvir</a
-          >
+
+          <div id="playlist-actions" class="playlist-actions">
+            <a
+              href="https://open.spotify.com/playlist/37i9dQZF1DX0h0QnLkMBl4"
+              target="_blank"
+              class="btn-spotify outline"
+            >
+              Abrir App <i class="fa-solid fa-up-right-from-square"></i>
+            </a>
+
+            <button onclick="tocarNoSite()" class="btn-spotify filled">
+              Tocar aqui <i class="fa-solid fa-play"></i>
+            </button>
+          </div>
+
+          <div id="spotify-player-container" class="player-frame hidden"></div>
         </div>
 
         <div class="form-container">
@@ -147,7 +198,7 @@
             scrolling="no"
             marginheight="0"
             marginwidth="0"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-47.9150624%2C-15.8129082%2C-47.8950624%2C-15.7929082&amp;layer=mapnik&amp;marker=-15.8029082%2C-47.9050624"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-47.9150624%2C-15.8129082%2C-47.8950624%2C-15.7929082&layer=mapnik&marker=-15.8029082%2C-47.9050624"
             style="border: 0"
           >
           </iframe>

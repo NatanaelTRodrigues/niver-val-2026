@@ -447,3 +447,88 @@ select:focus {
   color: var(--text-dark);
   line-height: 1.5;
 }
+.val-text {
+  background: var(--white);
+  padding: 40px 25px 25px 25px; /* Aumentei o padding superior por causa da foto */
+  border-radius: var(--radius);
+  color: var(--text-dark); /* Mudei para escuro para facilitar leitura */
+  line-height: 1.6;
+  box-shadow: var(--shadow);
+  position: relative;
+  top: -30px; /* Sobe um pouco pra encostar na foto */
+  z-index: 1;
+  text-align: left; /* Texto alinhado a esquerda fica mais elegante para leitura longa */
+}
+
+.val-text p {
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #546e7a; /* Cinza azulado bonito */
+}
+
+/* Caixa do Dress Code */
+.dress-code-alert {
+  background-color: #e0f2f1; /* Verde água bem clarinho */
+  border-left: 5px solid var(--primary);
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.dress-code-alert i {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.dress-code-alert strong {
+  color: var(--primary);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.dress-code-alert span {
+  font-size: 0.85rem;
+  color: var(--text-dark);
+}
+/* Botão Olho Mágico Flutuante */
+.magic-eye {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999; /* Fica acima de tudo */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: var(--primary);
+  font-size: 1.3rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  backdrop-filter: blur(5px); /* Efeito de vidro */
+}
+
+.magic-eye:hover {
+  transform: scale(1.1) rotate(10deg);
+  background: white;
+  color: var(--text-dark);
+}
+
+/* Classe que esconde o site */
+.invisible {
+  opacity: 0;
+  pointer-events: none; /* Impede cliques quando invisível */
+  transform: scale(0.95); /* Efeito de "encolher" ao sumir */
+  filter: blur(10px); /* Desfoque ao sumir */
+}
+
+/* Transição suave no container principal */
+.main-container {
+  transition: all 0.6s ease-in-out;
+}
