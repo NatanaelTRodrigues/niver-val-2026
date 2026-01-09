@@ -1,8 +1,16 @@
 const SHEET_URL =
   "https://script.google.com/macros/s/AKfycbwo71pHuK6fKtt-lh4YfZULtdDBgP_E2-fgkoo7vR509OmKP3n3wXgygfByVPP8NGAI/exec";
 const TOTAL_NUMEROS = 300;
+const DESTINO_LAT = -15.8029082;
+const DESTINO_LNG = -47.9050624;
 
 let numerosOcupados = [];
+let userLocation = null;
+
+// Inicializar emojis flutuantes ao carregar a página
+window.addEventListener("load", () => {
+  criarEmojisflutuantes();
+});
 
 function selectMode(mode) {
   document
@@ -118,14 +126,17 @@ document.getElementById("rsvp-form").addEventListener("submit", function (e) {
     body: JSON.stringify(data),
   })
     .then(() => {
+      // LANÇAR CONFETES! 🎉
+      lancarConfetes();
+
       document.querySelector(".form-container").innerHTML = `
             <div style="text-align:center; padding:30px;">
-                <i class="fa-solid fa-circle-check" style="font-size:4rem; color:var(--primary);"></i>
-                <h2 style="color:#333;">Confirmado!</h2>
-                <p>Nos vemos no parque!</p>
+                <i class="fa-solid fa-circle-check" style="font-size:4rem; color:var(--primary); animation: scaleIn 0.5s ease-out;"></i>
+                <h2 style="color:#333; margin-top: 15px;">Confirmado! 🎉</h2>
+                <p style="font-size: 1.1rem; color: var(--text-gray);">Nos vemos no parque!</p>
                 ${
                   mode === "correr"
-                    ? `<p style="font-weight:bold; font-size:1.2rem; color:var(--primary);">Seu número: ${numero}</p>`
+                    ? `<p style="font-weight:bold; font-size:1.4rem; color:var(--primary); margin-top: 15px; animation: pulse 1s infinite;">Seu número: ${numero}</p>`
                     : ""
                 }
             </div>
@@ -161,7 +172,7 @@ function tocarNoSite() {
   const container = document.getElementById("spotify-player-container");
   const actions = document.getElementById("playlist-actions");
 
-  const PLAYLIST_ID = "37i9dQZF1DX0h0QnLkMBl4";
+  const PLAYLIST_ID = "6iHvN43pGY2sWin3lxi3FZ";
 
   // Monta o player do Spotify
   container.innerHTML = `
@@ -178,4 +189,145 @@ function tocarNoSite() {
 
   container.classList.remove("hidden");
   actions.style.display = "none";
+}
+
+// ============ FUNÇÕES DE INTERATIVIDADE JOVIAL ============
+
+// Criar emojis flutuantes de fundo
+function criarEmojisflutuantes() {
+  const container = document.getElementById("floating-emojis");
+  const emojis = ["🎈", "🎉", "🎊", "💚", "🏃", "✨", "🎵"];
+
+  for (let i = 0; i < 8; i++) {
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "%";
+    emoji.style.top = Math.random() * 100 + "%";
+    emoji.style.animationDelay = Math.random() * 4 + "s";
+    emoji.style.animationDuration = 3 + Math.random() * 2 + "s";
+    container.appendChild(emoji);
+  }
+}
+
+// Efeito de confetes ao confirmar presença
+function lancarConfetes() {
+  const canvas = document.getElementById("confetti-canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const confetti = [];
+  const colors = ["#00bfa5", "#e0f2f1", "#4dd0e1", "#26a69a", "#80cbc4"];
+
+  // Criar 150 confetes
+  for (let i = 0; i < 150; i++) {
+    confetti.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: Math.random() * 8 + 5,
+      speedY: Math.random() * 3 + 2,
+      speedX: Math.random() * 2 - 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      rotationSpeed: Math.random() * 10 - 5,
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach((piece, index) => {
+      ctx.save();
+      ctx.translate(piece.x, piece.y);
+      ctx.rotate((piece.rotation * Math.PI) / 180);
+      ctx.fillStyle = piece.color;
+      ctx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size);
+      ctx.restore();
+
+      piece.y += piece.speedY;
+      piece.x += piece.speedX;
+      piece.rotation += piece.rotationSpeed;
+
+      // Remover confetes que saíram da tela
+      if (piece.y > canvas.height) {
+        confetti.splice(index, 1);
+      }
+    });
+
+    if (confetti.length > 0) {
+      requestAnimationFrame(animate);
+    } else {
+      // Limpar canvas quando terminar
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  animate();
+}
+
+// ============ FUNÇÕES DE GEOLOCALIZAÇÃO ============
+
+// Obter localização do usuário
+function obterLocalizacao() {
+  if (!navigator.geolocation) {
+    alert("Seu navegador não suporta geolocalização 😢");
+    return;
+  }
+
+  const btn = document.querySelector(".btn-location");
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Localizando...';
+  btn.disabled = true;
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      userLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      atualizarLinksComLocalizacao();
+
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Localização Obtida!';
+      btn.style.background =
+        "linear-gradient(135deg, #4caf50 0%, #388e3c 100%)";
+
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        btn.style.background = "";
+      }, 2000);
+    },
+    (error) => {
+      console.error("Erro ao obter localização:", error);
+      alert(
+        "Não foi possível obter sua localização. Verifique as permissões do navegador."
+      );
+      btn.innerHTML = originalHTML;
+      btn.disabled = false;
+    }
+  );
+}
+
+// Atualizar links de navegação com a localização do usuário
+function atualizarLinksComLocalizacao() {
+  if (!userLocation) return;
+
+  const origem = `${userLocation.lat},${userLocation.lng}`;
+  const destino = `${DESTINO_LAT},${DESTINO_LNG}`;
+
+  // Google Maps
+  document.getElementById(
+    "google-maps-link"
+  ).href = `https://www.google.com/maps/dir/?api=1&origin=${origem}&destination=${destino}&travelmode=driving`;
+
+  // Waze
+  document.getElementById(
+    "waze-link"
+  ).href = `https://waze.com/ul?ll=${DESTINO_LAT},${DESTINO_LNG}&navigate=yes&from=${origem}`;
+
+  // Uber (já pega localização automaticamente)
+  // Não precisa alterar
 }
