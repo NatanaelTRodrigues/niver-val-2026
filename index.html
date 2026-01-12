@@ -23,6 +23,14 @@
     >
       <i class="fa-solid fa-eye"></i>
     </div>
+    <div
+      id="countdown-btn"
+      class="magic-timer"
+      onclick="toggleCountdown()"
+      title="Ver contagem regressiva"
+    >
+      <i class="fa-solid fa-clock"></i>
+    </div>
     <div class="main-container">
       <header class="header-box animate-up">
         <img src="perfil.png" alt="" class="header-bg-img" />
@@ -74,6 +82,39 @@
               >
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Contagem Regressiva -->
+      <section class="countdown-section animate-up delay-2">
+        <button
+          class="countdown-close"
+          onclick="toggleCountdown()"
+          aria-label="Fechar"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <p class="countdown-label-top">Faltam</p>
+        <div class="countdown-minimal">
+          <span class="time-unit">
+            <span id="days" class="number">00</span>
+            <span class="label">dias</span>
+          </span>
+          <span class="separator">:</span>
+          <span class="time-unit">
+            <span id="hours" class="number">00</span>
+            <span class="label">hrs</span>
+          </span>
+          <span class="separator">:</span>
+          <span class="time-unit">
+            <span id="minutes" class="number">00</span>
+            <span class="label">min</span>
+          </span>
+          <span class="separator">:</span>
+          <span class="time-unit">
+            <span id="seconds" class="number">00</span>
+            <span class="label">seg</span>
+          </span>
         </div>
       </section>
 

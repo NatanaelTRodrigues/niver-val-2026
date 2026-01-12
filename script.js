@@ -7,10 +7,64 @@ const DESTINO_LNG = -47.9050624;
 let numerosOcupados = [];
 let userLocation = null;
 
-// Inicializar emojis flutuantes ao carregar a página
+// Inicializar emojis flutuantes e contagem regressiva ao carregar a página
 window.addEventListener("load", () => {
   criarEmojisflutuantes();
+  iniciarContagemRegressiva();
 });
+
+// Iniciar imediatamente também (garantia dupla)
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", iniciarContagemRegressiva);
+} else {
+  iniciarContagemRegressiva();
+}
+
+// ============ CONTAGEM REGRESSIVA ============
+function iniciarContagemRegressiva() {
+  // Data do evento: 08/02/2026 às 07:00
+  const targetDate = new Date("2026-02-08T07:00:00-03:00").getTime();
+
+  function atualizarContador() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance > 0) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+
+      if (daysEl) daysEl.textContent = String(days).padStart(2, "0");
+      if (hoursEl) hoursEl.textContent = String(hours).padStart(2, "0");
+      if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, "0");
+      if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, "0");
+    } else {
+      // Evento já passou
+      const daysEl = document.getElementById("days");
+      const hoursEl = document.getElementById("hours");
+      const minutesEl = document.getElementById("minutes");
+      const secondsEl = document.getElementById("seconds");
+
+      if (daysEl) daysEl.textContent = "00";
+      if (hoursEl) hoursEl.textContent = "00";
+      if (minutesEl) minutesEl.textContent = "00";
+      if (secondsEl) secondsEl.textContent = "00";
+    }
+  }
+
+  // Atualizar imediatamente
+  atualizarContador();
+  // Atualizar a cada segundo
+  setInterval(atualizarContador, 1000);
+}
 
 function selectMode(mode) {
   document
@@ -166,6 +220,14 @@ function toggleMagicEye() {
     icon.classList.remove("fa-eye-slash");
     icon.classList.add("fa-eye");
   }
+}
+
+function toggleCountdown() {
+  const countdown = document.querySelector(".countdown-section");
+  const btn = document.getElementById("countdown-btn");
+
+  countdown.classList.toggle("show");
+  btn.classList.toggle("active");
 }
 
 function tocarNoSite() {
