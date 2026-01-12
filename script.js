@@ -6,11 +6,17 @@ const DESTINO_LNG = -47.9050624;
 
 let numerosOcupados = [];
 let userLocation = null;
+let countdownTimer = null;
 
 // Inicializar emojis flutuantes e contagem regressiva ao carregar a página
 window.addEventListener("load", () => {
   criarEmojisflutuantes();
   iniciarContagemRegressiva();
+  
+  // Abrir cronômetro automaticamente após um pequeno delay
+  setTimeout(() => {
+    abrirCountdownAutomatico();
+  }, 500);
 });
 
 // Iniciar imediatamente também (garantia dupla)
@@ -228,6 +234,28 @@ function toggleCountdown() {
 
   countdown.classList.toggle("show");
   btn.classList.toggle("active");
+  
+  // Limpar o timer se a pessoa fechar manualmente
+  if (!countdown.classList.contains("show") && countdownTimer) {
+    clearTimeout(countdownTimer);
+    countdownTimer = null;
+  }
+}
+
+function abrirCountdownAutomatico() {
+  const countdown = document.querySelector(".countdown-section");
+  const btn = document.getElementById("countdown-btn");
+  
+  // Abrir o cronômetro
+  countdown.classList.add("show");
+  btn.classList.add("active");
+  
+  // Fechar automaticamente após 5 segundos
+  countdownTimer = setTimeout(() => {
+    countdown.classList.remove("show");
+    btn.classList.remove("active");
+    countdownTimer = null;
+  }, 5000);
 }
 
 function tocarNoSite() {
