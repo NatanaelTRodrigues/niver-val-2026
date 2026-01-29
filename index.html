@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aniversário da Val </title>
+    <title>Aniversário da Val</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap"
       rel="stylesheet"
@@ -23,12 +23,52 @@
     >
       <i class="fa-solid fa-eye"></i>
     </div>
+    <div
+      id="countdown-btn"
+      class="magic-timer"
+      onclick="toggleCountdown()"
+      title="Ver contagem regressiva"
+    >
+      <i class="fa-solid fa-clock"></i>
+    </div>
+
+    <section class="countdown-section">
+      <button
+        class="countdown-close"
+        onclick="toggleCountdown()"
+        aria-label="Fechar"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <p class="countdown-label-top">Faltam</p>
+      <div class="countdown-minimal">
+        <span class="time-unit"
+          ><span id="days" class="number">00</span
+          ><span class="label">dias</span></span
+        >
+        <span class="separator">:</span>
+        <span class="time-unit"
+          ><span id="hours" class="number">00</span
+          ><span class="label">hrs</span></span
+        >
+        <span class="separator">:</span>
+        <span class="time-unit"
+          ><span id="minutes" class="number">00</span
+          ><span class="label">min</span></span
+        >
+        <span class="separator">:</span>
+        <span class="time-unit"
+          ><span id="seconds" class="number">00</span
+          ><span class="label">seg</span></span
+        >
+      </div>
+    </section>
     <div class="main-container">
       <header class="header-box animate-up">
         <img src="perfil.png" alt="" class="header-bg-img" />
 
         <p class="super-title">SAVE THE DATE</p>
-        <h1>Aniversário da Val </h1>
+        <h1>Aniversário da Val</h1>
 
         <div class="event-details">
           <div class="detail-item">
@@ -189,16 +229,16 @@
         <h3 class="section-title-sm">
           <i class="fa-solid fa-map-location-dot"></i> Como Chegar
         </h3>
-<div class="map-frame">
-  <iframe
-    width="100%"
-    height="100%"
-    style="border: 0"
-    loading="lazy"
-    allowfullscreen
-    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=-15.8029082,-47.9050624&zoom=15"
-  ></iframe>
-</div>
+        <div class="map-frame">
+          <iframe
+            width="100%"
+            height="100%"
+            style="border: 0"
+            loading="lazy"
+            allowfullscreen
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=-15.8029082,-47.9050624&zoom=15"
+          ></iframe>
+        </div>
 
         <div class="gps-buttons">
           <a
@@ -209,13 +249,13 @@
             <i class="fa-brands fa-waze"></i> Waze
           </a>
 
-            <a
-    href="https://www.google.com/maps/search/?api=1&query=-15.8029082,-47.9050624"
-    target="_blank"
-    class="btn-gps google"
-  >
-    <i class="fa-brands fa-google"></i> Maps
-  </a>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=-15.8029082,-47.9050624"
+            target="_blank"
+            class="btn-gps google"
+          >
+            <i class="fa-brands fa-google"></i> Maps
+          </a>
           <a
             href="https://m.uber.com/ul/?action=setPickup&client_id=uber&pickup=my_location&dropoff[latitude]=-15.8029082&dropoff[longitude]=-47.9050624&dropoff[nickname]=Estacionamento%2010"
             target="_blank"
