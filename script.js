@@ -157,6 +157,67 @@ function toggleMagicEye() {
   }
 }
 
+let autoCloseTimer; // Variável para controlar o fechamento automático
+
+window.addEventListener("load", () => {
+  iniciarContagemRegressiva();
+
+  // FUNCIONALIDADE: Aparecer assim que entrar no site
+  setTimeout(() => {
+    const countdown = document.querySelector(".countdown-section");
+    const btn = document.getElementById("countdown-btn");
+
+    if (countdown && btn) {
+      countdown.classList.add("show");
+      btn.classList.add("active");
+
+      // FECHAMENTO AUTOMÁTICO: 6 segundos após abrir
+      autoCloseTimer = setTimeout(() => {
+        countdown.classList.remove("show");
+        btn.classList.remove("active");
+      }, 6000);
+    }
+  }, 500); // Meio segundo de delay para charme
+});
+
+function iniciarContagemRegressiva() {
+  // Alvo: 08/02/2026 às 07:00
+  const targetDate = new Date("2026-02-08T07:00:00").getTime();
+
+  const timerFunc = () => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance > 0) {
+      const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const h = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+      );
+      const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(d).padStart(2, "0");
+      document.getElementById("hours").innerText = String(h).padStart(2, "0");
+      document.getElementById("minutes").innerText = String(m).padStart(2, "0");
+      document.getElementById("seconds").innerText = String(s).padStart(2, "0");
+    }
+  };
+
+  timerFunc(); // Roda uma vez imediato
+  setInterval(timerFunc, 1000);
+}
+
+function toggleCountdown() {
+  const countdown = document.querySelector(".countdown-section");
+  const btn = document.getElementById("countdown-btn");
+
+  // Se o usuário clicar manualmente, cancelamos o timer de fechar sozinho
+  clearTimeout(autoCloseTimer);
+
+  countdown.classList.toggle("show");
+  btn.classList.toggle("active");
+}
+
 function tocarNoSite() {
   const container = document.getElementById("spotify-player-container");
   const actions = document.getElementById("playlist-actions");
@@ -180,66 +241,63 @@ function tocarNoSite() {
   actions.style.display = "none";
 
   function obterLocalizacao() {
-  if (!navigator.geolocation) {
-    alert("Seu navegador não suporta geolocalização 😢");
-    return;
-  }
+    if (!navigator.geolocation) {
+      alert("Seu navegador não suporta geolocalização 😢");
+      return;
+    }
 
-  const btn = document.querySelector(".btn-location");
-  const originalHTML = btn.innerHTML;
-  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Localizando...';
-  btn.disabled = true;
+    const btn = document.querySelector(".btn-location");
+    const originalHTML = btn.innerHTML;
+    btn.innerHTML =
+      '<i class="fa-solid fa-spinner fa-spin"></i> Localizando...';
+    btn.disabled = true;
 
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      userLocation = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        userLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        };
 
-      atualizarLinksComLocalizacao();
+        atualizarLinksComLocalizacao();
 
-      btn.innerHTML = '<i class="fa-solid fa-check"></i> Localização Obtida!';
-      btn.style.background =
-        "linear-gradient(135deg, #4caf50 0%, #388e3c 100%)";
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Localização Obtida!';
+        btn.style.background =
+          "linear-gradient(135deg, #4caf50 0%, #388e3c 100%)";
 
-      setTimeout(() => {
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.disabled = false;
+          btn.style.background = "";
+        }, 2000);
+      },
+      (error) => {
+        console.error("Erro ao obter localização:", error);
+        alert(
+          "Não foi possível obter sua localização. Verifique as permissões do navegador.",
+        );
         btn.innerHTML = originalHTML;
         btn.disabled = false;
-        btn.style.background = "";
-      }, 2000);
-    },
-    (error) => {
-      console.error("Erro ao obter localização:", error);
-      alert(
-        "Não foi possível obter sua localização. Verifique as permissões do navegador."
-      );
-      btn.innerHTML = originalHTML;
-      btn.disabled = false;
-    }
-  );
-}
+      },
+    );
+  }
 
-// Atualizar links de navegação com a localização do usuário
-function atualizarLinksComLocalizacao() {
-  if (!userLocation) return;
+  // Atualizar links de navegação com a localização do usuário
+  function atualizarLinksComLocalizacao() {
+    if (!userLocation) return;
 
-  const origem = `${userLocation.lat},${userLocation.lng}`;
-  const destino = `${DESTINO_LAT},${DESTINO_LNG}`;
+    const origem = `${userLocation.lat},${userLocation.lng}`;
+    const destino = `${DESTINO_LAT},${DESTINO_LNG}`;
 
-  // Google Maps
-  document.getElementById(
-    "google-maps-link"
-  ).href = `https://www.google.com/maps/dir/?api=1&origin=${origem}&destination=${destino}&travelmode=driving`;
+    // Google Maps
+    document.getElementById("google-maps-link").href =
+      `https://www.google.com/maps/dir/?api=1&origin=${origem}&destination=${destino}&travelmode=driving`;
 
-  // Waze
-  document.getElementById(
-    "waze-link"
-  ).href = `https://waze.com/ul?ll=${DESTINO_LAT},${DESTINO_LNG}&navigate=yes&from=${origem}`;
+    // Waze
+    document.getElementById("waze-link").href =
+      `https://waze.com/ul?ll=${DESTINO_LAT},${DESTINO_LNG}&navigate=yes&from=${origem}`;
 
-  // Uber (já pega localização automaticamente)
-  // Não precisa alterar
-
-}
-
+    // Uber (já pega localização automaticamente)
+    // Não precisa alterar
+  }
 }
