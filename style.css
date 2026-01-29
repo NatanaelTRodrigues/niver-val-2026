@@ -19,10 +19,8 @@ body {
 
   /* AQUI É A MÁGICA DA IMAGEM DE FUNDO */
   /* Colocamos uma camada branca meio transparente (0.9) por cima da foto fundo.png */
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.6),
-      rgba(255, 255, 255, 0.6)
-    ),
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
     url("fundo.jpg");
   background-repeat: no-repeat;
   background-position: center center;
@@ -138,7 +136,9 @@ h1 {
   border-radius: var(--radius);
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s, border 0.2s;
+  transition:
+    transform 0.2s,
+    border 0.2s;
   border: 2px solid transparent;
   box-shadow: var(--shadow);
 }
@@ -437,7 +437,7 @@ select:focus {
   font-weight: bold;
   font-size: 0.9rem;
   color: white;
-   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
@@ -453,7 +453,9 @@ select:focus {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .btn-gps:hover::after {
@@ -589,6 +591,84 @@ select:focus {
   filter: blur(10px); /* Desfoque ao sumir */
 }
 
+/* Posicionando o botão do timer ao lado do olho mágico */
+.magic-timer {
+  position: fixed;
+  top: 20px;
+  right: 65px; /* O olho está em 20px, este fica um pouco mais à esquerda */
+  background: rgba(255, 255, 255, 0.8);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: var(--primary);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.magic-timer.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Modal da Contagem Regressiva */
+.countdown-section {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.4s ease;
+  text-align: center;
+  min-width: 280px;
+}
+
+.countdown-section.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+.countdown-minimal {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  font-family: monospace;
+}
+
+.number {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+  display: block;
+}
+
+.label {
+  font-size: 0.7rem;
+  color: var(--text-gray);
+  text-transform: uppercase;
+}
+
+.countdown-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-gray);
+}
 /* Transição suave no container principal */
 .main-container {
   transition: all 0.6s ease-in-out;
